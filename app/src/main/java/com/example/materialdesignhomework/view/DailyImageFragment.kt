@@ -57,14 +57,14 @@ class DailyImageFragment : Fragment() {
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
 
 
-        inputLayout.setOnClickListener {
+        inputLayout.setEndIconOnClickListener() {
             val intent = Intent(Intent.ACTION_VIEW)
             val url = "https://en.wikipedia.org/wiki/${inputEditText.text.toString()}"
             val uri = Uri.parse(url)
             intent.data = uri
             startActivity(intent)
-            }
         }
+    }
 
     private fun initView(view: View) {
         dailyImageView = view.findViewById(R.id.image_view_nasa_image)
@@ -80,10 +80,11 @@ class DailyImageFragment : Fragment() {
     private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-        btnDescription.setOnClickListener{
+        btnDescription.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
     }
+
 
     private fun renderData(appState: AppState) {
         when (appState) {
@@ -91,7 +92,7 @@ class DailyImageFragment : Fragment() {
                 val serverResponseData = appState.serverResponseData
                 val url = serverResponseData.url
                 if (url.isNullOrEmpty()) {
-                    Toast.makeText(context,"Ошибка",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
                 } else {
                     dailyImageView.load(url) {
                         lifecycle(this@DailyImageFragment)
@@ -102,14 +103,16 @@ class DailyImageFragment : Fragment() {
                 }
             }
             is AppState.Loading -> {
-                Toast.makeText(context,"Загрузка",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
             is AppState.Error -> {
-                Toast.makeText(context,"Ошибка",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
-    companion object{
+
+    companion object {
         fun newInstance() = DailyImageFragment()
     }
 }

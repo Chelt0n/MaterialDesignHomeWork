@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextSheetBottom">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+    </style>
+
+    <style name="TextSheetBottom.Primary">
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="fontFamily">serif-monospace</item>
+        <item name="android:textColor">#2f3263</item>
+    </style>
+
+    <style name="TextSheetBottom.Secondary">
+        <item name="android:textColor">#2f3263</item>
+        <item name="fontFamily">serif</item>
+    </style>
+
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="fontFamily">serif</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:hint">Поиск в википедии</item>
+    </style>
+
+    <style name="cursive" parent="Theme.MaterialDesignHomeWork">
+        <item name="fontFamily">cursive</item>
+    </style>
+
+    <style name="sans_serif" parent="Theme.MaterialDesignHomeWork">
+        <item name="fontFamily">sans-serif-thin</item>
+    </style>
+
+    <style name="condensed" parent="Theme.MaterialDesignHomeWork">
+        <item name="fontFamily">sans-serif-condensed-medium</item>
+    </style>
+
+</resources>
