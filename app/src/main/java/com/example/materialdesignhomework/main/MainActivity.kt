@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        bottomBar()
+        initBottomBar()
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun bottomBar() {
+    private fun initBottomBar() {
         val bottomAppBar: BottomAppBar = findViewById(R.id.bottom_app_bar)
         val fab:FloatingActionButton = findViewById(R.id.fab)
         bottomAppBar.inflateMenu(R.menu.menu_item_bottom_app_bar)
