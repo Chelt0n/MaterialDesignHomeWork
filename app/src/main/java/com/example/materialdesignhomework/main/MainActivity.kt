@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.viewpager2.widget.ViewPager2
 import com.example.materialdesign.FontTypes
-import com.example.materialdesign.SharedPref
-import com.example.materialdesign.SharedPref.Companion.SETTINGS
+import com.example.materialdesign.AppThemeSharedPreferences
+import com.example.materialdesign.AppThemeSharedPreferences.Companion.SETTINGS
 import com.example.materialdesign.Theme
 import com.example.materialdesignhomework.view.SettingsFragment
 import com.example.materialdesignhomework.R
@@ -19,15 +19,17 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var appThemeSharedPreferences: AppThemeSharedPreferences
 
-    private lateinit var sharedPref: SharedPref
     private lateinit var viewPager2:ViewPager2
     private lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPref = SharedPref(getSharedPreferences(SETTINGS, MODE_PRIVATE))
+        appThemeSharedPreferences = AppThemeSharedPreferences(getSharedPreferences(SETTINGS, MODE_PRIVATE))
+        setUserTheme()
         setContentView(R.layout.main_activity)
+        initBottomBar()
         initBottomBar()
 
         tabLayout = findViewById(R.id.tab_layout)
@@ -76,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             R.id.app_bar_settings -> {
                 supportFragmentManager.beginTransaction().replace(
                     R.id.container,
-                    SettingsFragment.newInstance()
+                    SettingsFragment()
                 ).addToBackStack(null).commit()
             }
         }
@@ -84,11 +86,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setUserTheme() {
-        when (sharedPref.getCustomTheme()) {
+        when (appThemeSharedPreferences.getCustomTheme()) {
             Theme.DAY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             Theme.NIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
-        when (sharedPref.getFontType()) {
+        when (appThemeSharedPreferences.getFontType()) {
             FontTypes.CURSIVE -> setTheme(R.style.cursive)
             FontTypes.SANS_SERIF_THIN -> setTheme(R.style.sans_serif)
             FontTypes.CONDENSED -> setTheme(R.style.condensed)

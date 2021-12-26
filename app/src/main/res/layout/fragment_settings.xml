@@ -20,21 +20,21 @@
         android:layout_gravity="center">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/radio1"
+            android:id="@+id/cursive_chip"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CURSIVE" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/radio2"
+            android:id="@+id/sans_serif_thin_chip"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SANS_SERIF_THIN" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/radio3"
+            android:id="@+id/condensed_chip"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
 
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchTheme"
+        android:id="@+id/switch_theme"
         android:layout_marginTop="50dp"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
