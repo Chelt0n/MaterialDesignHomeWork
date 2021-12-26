@@ -25,11 +25,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         sharedPref = SharedPref(getSharedPreferences(SETTINGS, MODE_PRIVATE))
         setContentView(R.layout.main_activity)
-        bottomBar()
+        initBottomBar()
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, DailyImageFragment.newInstance())
+                .replace(R.id.container, DailyImageFragment())
                 .commitNow()
         }
     }
@@ -40,14 +40,14 @@ class MainActivity : AppCompatActivity() {
         Log.d("mylog", sharedPref.getCustomTheme().toString())
     }
 
-    private fun bottomBar() {
+    private fun initBottomBar() {
         val bottomAppBar: BottomAppBar = findViewById(R.id.bottom_app_bar)
         val fab: FloatingActionButton = findViewById(R.id.fab)
         bottomAppBar.inflateMenu(R.menu.menu_item_bottom_app_bar)
         setSupportActionBar(bottomAppBar)
         fab.setOnClickListener {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, DailyImageFragment.newInstance())
+                .replace(R.id.container, DailyImageFragment())
                 .commitNow()
         }
     }
