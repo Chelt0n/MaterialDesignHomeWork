@@ -111,8 +111,5 @@ class DailyImageFragment : Fragment() {
                 Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
-
-
 }

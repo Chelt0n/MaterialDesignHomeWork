@@ -1,37 +1,32 @@
 package com.example.materialdesignhomework.view
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.IntentCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.materialdesign.FontTypes
-import com.example.materialdesign.SharedPref
+import com.example.materialdesign.AppThemeSharedPreferences
 import com.example.materialdesign.Theme
 import com.example.materialdesignhomework.R
 import com.example.materialdesignhomework.main.MainActivity
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.switchmaterial.SwitchMaterial
-import kotlin.system.exitProcess
 
 class SettingsFragment : Fragment() {
-    lateinit var sharedPref: SharedPref
+    private lateinit var appThemeSharedPreferences: AppThemeSharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        sharedPref = SharedPref(
+        appThemeSharedPreferences = AppThemeSharedPreferences(
             requireActivity().getSharedPreferences(
-                SharedPref.SETTINGS,
+                AppThemeSharedPreferences.SETTINGS,
                 Context.MODE_PRIVATE
             )
         )
@@ -41,44 +36,44 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val switchTheme = view.findViewById<SwitchMaterial>(R.id.switchTheme)
-        val radio1 = view.findViewById<Chip>(R.id.radio1)
-        val radio2 = view.findViewById<Chip>(R.id.radio2)
-        val radio3 = view.findViewById<Chip>(R.id.radio3)
+        val switchTheme = view.findViewById<SwitchMaterial>(R.id.switch_theme)
+        val cursiveChip = view.findViewById<Chip>(R.id.cursive_chip)
+        val sansSerifThinChip = view.findViewById<Chip>(R.id.sans_serif_thin_chip)
+        val radio3 = view.findViewById<Chip>(R.id.condensed_chip)
 
-        radio1.setOnClickListener {
+        cursiveChip.setOnClickListener {
             Toast.makeText(context, "1", Toast.LENGTH_SHORT).show()
-            sharedPref.setFontType(FontTypes.CURSIVE)
+            appThemeSharedPreferences.setFontType(FontTypes.CURSIVE)
             (requireActivity() as MainActivity).recreate()
             (requireActivity() as MainActivity).supportFragmentManager.beginTransaction().replace(
-                R.id.container, DailyImageFragment.newInstance()
+                R.id.container, DailyImageFragment()
             ).addToBackStack(null).commit()
 
 
         }
-        radio2.setOnClickListener {
+        sansSerifThinChip.setOnClickListener {
             Toast.makeText(context, "2", Toast.LENGTH_SHORT).show()
-            sharedPref.setFontType(FontTypes.SANS_SERIF_THIN)
+            appThemeSharedPreferences.setFontType(FontTypes.SANS_SERIF_THIN)
             (requireActivity() as MainActivity).supportFragmentManager.beginTransaction().replace(
-                R.id.container, DailyImageFragment.newInstance()
+                R.id.container, DailyImageFragment()
             ).addToBackStack(null).commit()
             (requireActivity() as MainActivity).recreate()
         }
         radio3.setOnClickListener {
             Toast.makeText(context, "3", Toast.LENGTH_SHORT).show()
-            sharedPref.setFontType(FontTypes.CONDENSED)
+            appThemeSharedPreferences.setFontType(FontTypes.CONDENSED)
             (requireActivity() as MainActivity).supportFragmentManager.beginTransaction().replace(
-                R.id.container, DailyImageFragment.newInstance()
+                R.id.container, DailyImageFragment()
             ).addToBackStack(null).commit()
             (requireActivity() as MainActivity).recreate()
         }
 
-        switchTheme.isChecked = sharedPref.getCustomTheme() == Theme.NIGHT
+        switchTheme.isChecked = appThemeSharedPreferences.getCustomTheme() == Theme.NIGHT
         switchTheme.setOnClickListener {
             if (switchTheme.isChecked) {
-                sharedPref.setCustomTheme(Theme.NIGHT)
+                appThemeSharedPreferences.setCustomTheme(Theme.NIGHT)
             } else {
-                sharedPref.setCustomTheme(Theme.DAY)
+                appThemeSharedPreferences.setCustomTheme(Theme.DAY)
             }
             (requireActivity() as MainActivity).setUserTheme()
         }
@@ -90,10 +85,4 @@ class SettingsFragment : Fragment() {
 
         }
     }
-
-
-    companion object {
-        fun newInstance() = SettingsFragment()
-    }
-
 }

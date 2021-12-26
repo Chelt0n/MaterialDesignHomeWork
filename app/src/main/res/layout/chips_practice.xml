@@ -172,21 +172,21 @@
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/radio1"
+            android:id="@+id/cursive_chip"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/radio2"
+            android:id="@+id/sans_serif_thin_chip"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/radio3"
+            android:id="@+id/condensed_chip"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
     </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchTheme"
+        android:id="@+id/switch_theme"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="Темная тема" />
