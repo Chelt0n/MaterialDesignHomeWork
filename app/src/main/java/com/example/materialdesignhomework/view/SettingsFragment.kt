@@ -36,35 +36,28 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val switchTheme = view.findViewById<SwitchMaterial>(R.id.switch_theme)
         val cursiveChip = view.findViewById<Chip>(R.id.cursive_chip)
         val sansSerifThinChip = view.findViewById<Chip>(R.id.sans_serif_thin_chip)
-        val radio3 = view.findViewById<Chip>(R.id.condensed_chip)
+        val condensedChip = view.findViewById<Chip>(R.id.condensed_chip)
 
         cursiveChip.setOnClickListener {
             Toast.makeText(context, "1", Toast.LENGTH_SHORT).show()
             appThemeSharedPreferences.setFontType(FontTypes.CURSIVE)
             (requireActivity() as MainActivity).recreate()
-            (requireActivity() as MainActivity).supportFragmentManager.beginTransaction().replace(
-                R.id.container, DailyImageFragment()
-            ).addToBackStack(null).commit()
-
 
         }
+
         sansSerifThinChip.setOnClickListener {
             Toast.makeText(context, "2", Toast.LENGTH_SHORT).show()
             appThemeSharedPreferences.setFontType(FontTypes.SANS_SERIF_THIN)
-            (requireActivity() as MainActivity).supportFragmentManager.beginTransaction().replace(
-                R.id.container, DailyImageFragment()
-            ).addToBackStack(null).commit()
             (requireActivity() as MainActivity).recreate()
         }
-        radio3.setOnClickListener {
+
+        condensedChip.setOnClickListener {
             Toast.makeText(context, "3", Toast.LENGTH_SHORT).show()
             appThemeSharedPreferences.setFontType(FontTypes.CONDENSED)
-            (requireActivity() as MainActivity).supportFragmentManager.beginTransaction().replace(
-                R.id.container, DailyImageFragment()
-            ).addToBackStack(null).commit()
             (requireActivity() as MainActivity).recreate()
         }
 
