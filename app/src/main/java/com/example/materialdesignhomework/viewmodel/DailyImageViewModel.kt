@@ -13,8 +13,7 @@ import retrofit2.Response
 class DailyImageViewModel(
     private val liveDataForViewToObserve: MutableLiveData<AppState> = MutableLiveData(),
     private val retrofitImpl: NasaApiRetrofit = NasaApiRetrofit(),
-) :
-    ViewModel() {
+) :ViewModel() {
 
     fun getImageData(): LiveData<AppState> {
         sendServerRequest()
