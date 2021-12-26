@@ -24,13 +24,6 @@ class ChipsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val chipGroup = view.findViewById<ChipGroup>(R.id.chipGroup)
-        chipGroup.setOnCheckedChangeListener { _, checkedId ->
-            val chip = chipGroup.findViewById<Chip>(checkedId)
-            val text = "Выбран ${chip.text}"
-            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-            Log.d("mylog", "Выбран ${chip.text}")
-        }
 
         val chipClose = view.findViewById<Chip>(R.id.chip_close)
         chipClose.setOnCloseIconClickListener {
@@ -38,10 +31,5 @@ class ChipsFragment : Fragment() {
             Toast.makeText(context, "Close is Clicked", Toast.LENGTH_SHORT).show()
 
         }
-    }
-
-
-    companion object {
-        fun newInstance() = ChipsFragment()
     }
 }

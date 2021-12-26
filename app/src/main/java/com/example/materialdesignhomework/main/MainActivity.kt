@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, DailyImageFragment.newInstance())
+                .replace(R.id.container, DailyImageFragment())
                 .commitNow()
         }
     }
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(bottomAppBar)
         fab.setOnClickListener {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, DailyImageFragment.newInstance())
+                .replace(R.id.container, DailyImageFragment())
                 .commitNow()
         }
     }
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             R.id.app_bar_settings -> {
                 supportFragmentManager.beginTransaction().replace(
                     R.id.container,
-                    ChipsFragment.newInstance()
+                    ChipsFragment()
                 ).addToBackStack(null).commit()
             }
             android.R.id.home -> {

@@ -27,13 +27,13 @@ class DailyImageFragment : Fragment() {
     }
 
     private lateinit var dailyImageView: ImageView
-    private lateinit var inputEditText: TextInputEditText
-    private lateinit var inputLayout: TextInputLayout
+    private lateinit var wikiInputEditText: TextInputEditText
+    private lateinit var wikiInputLayout: TextInputLayout
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-    private lateinit var title: TextView
-    private lateinit var description: TextView
-    private lateinit var imageTitle: TextView
-    private lateinit var btnDescription: Button
+    private lateinit var textViewBottomSheetDescriptionHeader: TextView
+    private lateinit var textViewBottomSheetDescriptionText: TextView
+    private lateinit var textViewImageTitle: TextView
+    private lateinit var buttonShowBottomSheet: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,30 +57,32 @@ class DailyImageFragment : Fragment() {
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
 
 
-        inputLayout.setOnClickListener {
+        wikiInputLayout.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
-            val url = "https://en.wikipedia.org/wiki/${inputEditText.text.toString()}"
+            val url = "https://en.wikipedia.org/wiki/${wikiInputEditText.text.toString()}"
             val uri = Uri.parse(url)
             intent.data = uri
             startActivity(intent)
-            }
         }
+    }
 
     private fun initView(view: View) {
         dailyImageView = view.findViewById(R.id.image_view_nasa_image)
-        inputEditText = view.findViewById(R.id.input_edit_text_wiki)
-        inputLayout = view.findViewById(R.id.input_layout_wiki)
-        title = view.findViewById(R.id.bottom_sheet_description_header)
-        description = view.findViewById(R.id.bottom_sheet_description)
-        imageTitle = view.findViewById(R.id.imageTitle)
-        btnDescription = view.findViewById(R.id.btnDescription)
+        wikiInputEditText = view.findViewById(R.id.input_edit_text_wiki)
+        wikiInputLayout = view.findViewById(R.id.input_layout_wiki)
+        textViewBottomSheetDescriptionHeader =
+            view.findViewById(R.id.text_view_bottom_sheet_description_header)
+        textViewBottomSheetDescriptionText =
+            view.findViewById(R.id.text_view_bottom_sheet_description_text)
+        textViewImageTitle = view.findViewById(R.id.text_view_image_title)
+        buttonShowBottomSheet = view.findViewById(R.id.button_show_bottom_sheet)
 
     }
 
     private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-        btnDescription.setOnClickListener{
+        buttonShowBottomSheet.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
     }
@@ -91,25 +93,23 @@ class DailyImageFragment : Fragment() {
                 val serverResponseData = appState.serverResponseData
                 val url = serverResponseData.url
                 if (url.isNullOrEmpty()) {
-                    Toast.makeText(context,"Ошибка",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
                 } else {
                     dailyImageView.load(url) {
                         lifecycle(this@DailyImageFragment)
                     }
-                    title.text = serverResponseData.title
-                    description.text = serverResponseData.explanation
-                    imageTitle.text = serverResponseData.title
+                    textViewBottomSheetDescriptionHeader.text = serverResponseData.title
+                    textViewBottomSheetDescriptionText.text = serverResponseData.explanation
+                    textViewImageTitle.text = serverResponseData.title
                 }
             }
             is AppState.Loading -> {
-                Toast.makeText(context,"Загрузка",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
             is AppState.Error -> {
-                Toast.makeText(context,"Ошибка",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
             }
         }
     }
-    companion object{
-        fun newInstance() = DailyImageFragment()
-    }
+
 }
