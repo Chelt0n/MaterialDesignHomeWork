@@ -57,7 +57,7 @@ class DailyImageFragment : Fragment() {
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
 
 
-        wikiInputLayout.setOnClickListener {
+        wikiInputLayout.setEndIconOnClickListener() {
             val intent = Intent(Intent.ACTION_VIEW)
             val url = "https://en.wikipedia.org/wiki/${wikiInputEditText.text.toString()}"
             val uri = Uri.parse(url)
@@ -87,6 +87,7 @@ class DailyImageFragment : Fragment() {
         }
     }
 
+
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
@@ -111,5 +112,4 @@ class DailyImageFragment : Fragment() {
             }
         }
     }
-
 }
