@@ -3,6 +3,7 @@ package com.example.materialdesignhomework.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.viewpager2.widget.ViewPager2
 import com.example.materialdesign.FontTypes
@@ -58,7 +59,6 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
 
     }
 

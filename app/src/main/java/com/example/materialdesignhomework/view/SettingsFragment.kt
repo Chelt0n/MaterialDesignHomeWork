@@ -70,12 +70,5 @@ class SettingsFragment : Fragment() {
             }
             (requireActivity() as MainActivity).setUserTheme()
         }
-
-        val chipClose = view.findViewById<Chip>(R.id.chip_close)
-        chipClose.setOnCloseIconClickListener {
-            chipClose.isVisible = false
-            Toast.makeText(context, "Close is Clicked", Toast.LENGTH_SHORT).show()
-
-        }
     }
 }
