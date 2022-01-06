@@ -1,4 +1,4 @@
-package com.example.materialdesignhomework.repository
+package com.example.materialdesignhomework.api
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -7,11 +7,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class NasaApiRetrofit {
-    private val baseUrl = "https://api.nasa.gov/"
 
-    fun getNasaService(): NasaApiService {
+    fun getNasaService(url:String): NasaApiService {
         val retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(url)
             .client(createOkHttpClient())
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()

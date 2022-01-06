@@ -1,16 +1,12 @@
-package com.example.materialdesignhomework.main
+package com.example.materialdesignhomework
 
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
 import androidx.viewpager2.widget.ViewPager2
-import com.example.materialdesign.FontTypes
-import com.example.materialdesign.AppThemeSharedPreferences
-import com.example.materialdesign.AppThemeSharedPreferences.Companion.SETTINGS
-import com.example.materialdesign.Theme
-import com.example.materialdesignhomework.R
+import com.example.materialdesignhomework.AppThemeSharedPreferences.Companion.SETTINGS
 import com.example.materialdesignhomework.view.ViewPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -61,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
     fun setUserTheme() {
         when (appThemeSharedPreferences.getCustomTheme()) {

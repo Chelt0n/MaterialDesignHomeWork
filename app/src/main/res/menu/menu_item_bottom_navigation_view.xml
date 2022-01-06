@@ -10,8 +10,8 @@
 
     <item
         android:id="@+id/menu_description"
-        android:icon="@drawable/ic_star"
-        android:title="Описание"
+        android:icon="@drawable/ic_mars"
+        android:title="Марс"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_settings"

@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.example.materialdesign.FontTypes
-import com.example.materialdesign.AppThemeSharedPreferences
-import com.example.materialdesign.Theme
+import com.example.materialdesignhomework.FontTypes
+import com.example.materialdesignhomework.AppThemeSharedPreferences
+import com.example.materialdesignhomework.Theme
 import com.example.materialdesignhomework.R
-import com.example.materialdesignhomework.main.MainActivity
+import com.example.materialdesignhomework.MainActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.switchmaterial.SwitchMaterial
 

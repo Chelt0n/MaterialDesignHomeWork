@@ -5,18 +5,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.materialdesignhomework.R
-import com.example.materialdesignhomework.viewmodel.AppState
+import com.example.materialdesignhomework.viewmodel.AppStateDailyImage
 import com.example.materialdesignhomework.viewmodel.DailyImageViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -29,8 +26,6 @@ class DailyImageFragment : Fragment() {
     private lateinit var dailyImageView: ImageView
     private lateinit var wikiInputEditText: TextInputEditText
     private lateinit var wikiInputLayout: TextInputLayout
-    private lateinit var textViewBottomSheetDescriptionHeader: TextView
-    private lateinit var textViewBottomSheetDescriptionText: TextView
     private lateinit var textViewImageTitle: TextView
 
 
@@ -53,7 +48,7 @@ class DailyImageFragment : Fragment() {
         view.setOnClickListener { view.clearFocus() }
 
 
-        wikiInputLayout.setEndIconOnClickListener() {
+        wikiInputLayout.setEndIconOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             val url = "https://en.wikipedia.org/wiki/${wikiInputEditText.text.toString()}"
             val uri = Uri.parse(url)
@@ -66,19 +61,15 @@ class DailyImageFragment : Fragment() {
         dailyImageView = view.findViewById(R.id.image_view_nasa_image)
         wikiInputEditText = view.findViewById(R.id.input_edit_text_wiki)
         wikiInputLayout = view.findViewById(R.id.input_layout_wiki)
-        textViewBottomSheetDescriptionHeader =
-            view.findViewById(R.id.text_view_bottom_sheet_description_header)
-        textViewBottomSheetDescriptionText =
-            view.findViewById(R.id.text_view_bottom_sheet_description_text)
         textViewImageTitle = view.findViewById(R.id.text_view_image_title)
 
     }
 
 
-    private fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Success -> {
-                val serverResponseData = appState.serverResponseData
+    private fun renderData(appStateDailyImage: AppStateDailyImage) {
+        when (appStateDailyImage) {
+            is AppStateDailyImage.Success -> {
+                val serverResponseData = appStateDailyImage.serverResponseData
                 val url = serverResponseData.url
                 if (url.isNullOrEmpty()) {
                     Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
@@ -86,15 +77,13 @@ class DailyImageFragment : Fragment() {
                     dailyImageView.load(url) {
                         lifecycle(this@DailyImageFragment)
                     }
-                    textViewBottomSheetDescriptionHeader.text = serverResponseData.title
-                    textViewBottomSheetDescriptionText.text = serverResponseData.explanation
                     textViewImageTitle.text = serverResponseData.title
                 }
             }
-            is AppState.Loading -> {
+            is AppStateDailyImage.Loading -> {
                 Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
-            is AppState.Error -> {
+            is AppStateDailyImage.Error -> {
                 Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
             }
         }
