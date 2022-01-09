@@ -7,20 +7,16 @@ import com.example.materialdesignhomework.view.DailyImageFragment
 import com.example.materialdesignhomework.view.DailyImageInfoFragment
 import com.example.materialdesignhomework.view.SettingsFragment
 
-
-class ViewPagerAdapter(private val fragment: FragmentActivity) :
+class ViewPagerAdapter(fragment: FragmentActivity) :
     FragmentStateAdapter(fragment) {
+    private var items = listOf(DailyImageFragment(),DailyImageInfoFragment(),SettingsFragment())
 
 
-    override fun getItemCount(): Int = 3
+    override fun getItemCount(): Int {
+        return items.size
+    }
 
     override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            0 -> DailyImageFragment()
-            1 -> DailyImageInfoFragment()
-            2 -> SettingsFragment()
-            else -> DailyImageFragment()
-        }
-
+        return items[position]
     }
 }
