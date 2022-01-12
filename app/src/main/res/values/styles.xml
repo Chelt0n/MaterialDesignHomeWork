@@ -28,16 +28,4 @@
         <item name="android:hint">Поиск в википедии</item>
     </style>
 
-    <style name="cursive" parent="Theme.MaterialDesignHomeWork">
-        <item name="fontFamily">cursive</item>
-    </style>
-
-    <style name="sans_serif" parent="Theme.MaterialDesignHomeWork">
-        <item name="fontFamily">sans-serif-thin</item>
-    </style>
-
-    <style name="condensed" parent="Theme.MaterialDesignHomeWork">
-        <item name="fontFamily">sans-serif-condensed-medium</item>
-    </style>
-
 </resources>
