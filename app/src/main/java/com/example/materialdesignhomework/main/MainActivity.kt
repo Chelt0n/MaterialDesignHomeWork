@@ -21,6 +21,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewPager2: ViewPager2
     private lateinit var bottomNavigationView: BottomNavigationView
 
+
+    private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            bottomNavigationView.menu.getItem(position).isChecked = true;
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appThemeSharedPreferences =
@@ -34,12 +42,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(this)
         viewPager2.adapter = adapter
 
-        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                bottomNavigationView.menu.getItem(position).isChecked = true;
-            }
-        })
+        viewPager2.registerOnPageChangeCallback(onPageChangeCallback)
 
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {

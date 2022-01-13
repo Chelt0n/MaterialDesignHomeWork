@@ -22,10 +22,6 @@ class DailyImageInfoFragment : Fragment() {
         ViewModelProvider(this)[DailyImageViewModel::class.java]
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getImageData().observe(this, { dailyImage -> renderData(dailyImage) })
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +33,9 @@ class DailyImageInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getImageData()
+            .observe(viewLifecycleOwner, { dailyImage -> renderData(dailyImage) })
+
         textViewBottomSheetDescriptionHeader =
             view.findViewById(R.id.text_view_bottom_sheet_description_header)
         textViewBottomSheetDescriptionText =
@@ -47,19 +46,14 @@ class DailyImageInfoFragment : Fragment() {
         when (appState) {
             is AppState.Success -> {
                 val serverResponseData = appState.serverResponseData
-                val url = serverResponseData.url
-                if (url.isNullOrEmpty()) {
-                    Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
-                } else {
-                    textViewBottomSheetDescriptionHeader.text = serverResponseData.title
-                    textViewBottomSheetDescriptionText.text = serverResponseData.explanation
-                }
+                textViewBottomSheetDescriptionHeader.text = serverResponseData.title
+                textViewBottomSheetDescriptionText.text = serverResponseData.explanation
             }
             is AppState.Loading -> {
                 Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
             is AppState.Error -> {
-                Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, appState.error.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }

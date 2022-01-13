@@ -9,7 +9,7 @@ import com.example.materialdesignhomework.view.SettingsFragment
 
 class ViewPagerAdapter(fragment: FragmentActivity) :
     FragmentStateAdapter(fragment) {
-    private var items = listOf(DailyImageFragment(),DailyImageInfoFragment(),SettingsFragment())
+    private val items = listOf(DailyImageFragment(),DailyImageInfoFragment(),SettingsFragment())
 
 
     override fun getItemCount(): Int {

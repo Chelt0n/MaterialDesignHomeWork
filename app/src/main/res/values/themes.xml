@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="bottomAppBarCustomTheme" parent="Widget.MaterialComponents.BottomNavigationView">
+    <style name="bottomAppBarCustomStyle" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="itemIconTint">#05010B</item>
         <item name="itemTextColor">#05010B</item>
         <item name="itemRippleColor">#60497F</item>

@@ -19,6 +19,7 @@ import com.example.materialdesignhomework.viewmodel.DailyImageViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.lang.Error
 
 class DailyImageFragment : Fragment() {
 
@@ -80,22 +81,20 @@ class DailyImageFragment : Fragment() {
             is AppState.Success -> {
                 val serverResponseData = appState.serverResponseData
                 val url = serverResponseData.url
-                if (url.isNullOrEmpty()) {
-                    Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
-                } else {
-                    dailyImageView.load(url) {
-                        lifecycle(this@DailyImageFragment)
-                    }
-                    textViewBottomSheetDescriptionHeader.text = serverResponseData.title
-                    textViewBottomSheetDescriptionText.text = serverResponseData.explanation
-                    textViewImageTitle.text = serverResponseData.title
+
+                dailyImageView.load(url) {
+                    lifecycle(this@DailyImageFragment)
                 }
+                textViewBottomSheetDescriptionHeader.text = serverResponseData.title
+                textViewBottomSheetDescriptionText.text = serverResponseData.explanation
+                textViewImageTitle.text = serverResponseData.title
+
             }
             is AppState.Loading -> {
                 Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
             is AppState.Error -> {
-                Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, appState.error.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }
