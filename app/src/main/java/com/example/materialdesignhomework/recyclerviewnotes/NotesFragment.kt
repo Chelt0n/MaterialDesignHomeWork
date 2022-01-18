@@ -30,7 +30,8 @@ class NotesFragment : Fragment() {
         NotesRecyclerViewAdapter(
             onItemClick = {
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, EditNoteFragment.newInstance(it)).addToBackStack("note")
+                    .replace(R.id.container, EditNoteFragment.newInstance(it))
+                    .addToBackStack("note")
                     .commit()
             },
             onItemDelete = { viewModel.onItemRemoved(it) }
@@ -78,10 +79,8 @@ class NotesFragment : Fragment() {
 
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun observeViewModel() {
         viewModel.getItems().observe(viewLifecycleOwner) { items ->
-
             val sampleDiffUtil = SampleDiffUtil(
                 oldList = adapter.data,
                 newList = items,
