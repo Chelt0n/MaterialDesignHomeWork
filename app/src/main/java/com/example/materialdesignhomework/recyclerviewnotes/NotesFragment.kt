@@ -81,8 +81,6 @@ class NotesFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun observeViewModel() {
         viewModel.getItems().observe(viewLifecycleOwner) { items ->
-            adapter.data = items
-            adapter.notifyDataSetChanged()
 
             val sampleDiffUtil = SampleDiffUtil(
                 oldList = adapter.data,

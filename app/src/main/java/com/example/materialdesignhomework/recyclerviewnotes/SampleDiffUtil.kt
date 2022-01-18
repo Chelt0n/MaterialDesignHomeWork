@@ -31,7 +31,7 @@ class SampleDiffUtil(
         val oldItem = oldList[oldItemPosition]
         val newItem = newList[newItemPosition]
         return when (oldItem) {
-            is NoteUiModel -> newItem is NoteUiModel && oldItem == newItem
+            is NoteUiModel -> newItem is NoteUiModel && oldItem.title == newItem.title && oldItem.description == newItem.description
             else -> throw IllegalArgumentException("unknown item type")
         }
     }
