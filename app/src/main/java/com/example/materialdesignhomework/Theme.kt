@@ -1,4 +1,4 @@
-package com.example.materialdesign
+package com.example.materialdesignhomework
 
 enum class Theme {
     DAY, NIGHT

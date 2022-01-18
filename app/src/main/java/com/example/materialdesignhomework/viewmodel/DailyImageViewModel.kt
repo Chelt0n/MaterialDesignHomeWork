@@ -4,34 +4,36 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.materialdesignhomework.BuildConfig
-import com.example.materialdesignhomework.repository.NASAImageResponse
-import com.example.materialdesignhomework.repository.NasaApiRetrofit
+import com.example.materialdesignhomework.api.NasaApiRetrofit
+import com.example.materialdesignhomework.model.imageofday.NASAImageResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DailyImageViewModel(
-    private val liveDataForViewToObserve: MutableLiveData<AppState> = MutableLiveData(),
+    private val liveDataForViewToObserve: MutableLiveData<AppStateDailyImage> = MutableLiveData(),
     private val retrofitImpl: NasaApiRetrofit = NasaApiRetrofit(),
 ) : ViewModel() {
 
-    fun getImageData(): LiveData<AppState> {
+    fun getImageData(): LiveData<AppStateDailyImage> {
         sendServerRequest()
         return liveDataForViewToObserve
     }
 
     private fun sendServerRequest() {
-        liveDataForViewToObserve.value = AppState.Loading(null)
+        liveDataForViewToObserve.value = AppStateDailyImage.Loading(null)
 
         val apiKey = BuildConfig.NASA_API_KEY
         if (apiKey.isBlank()) {
-            AppState.Error(Throwable("You need API key"))
+            AppStateDailyImage.Error(Throwable("You need API key"))
         } else {
             executeImageRequest(apiKey)
         }
     }
 
     private fun executeImageRequest(apiKey: String) {
+
+        val url = "https://api.nasa.gov/"
         val callback = object : Callback<NASAImageResponse> {
 
             override fun onResponse(
@@ -42,24 +44,24 @@ class DailyImageViewModel(
             }
 
             override fun onFailure(call: Call<NASAImageResponse>, t: Throwable) {
-                liveDataForViewToObserve.value = AppState.Error(t)
+                liveDataForViewToObserve.value = AppStateDailyImage.Error(t)
             }
         }
 
-        retrofitImpl.getNasaService().getImage(apiKey).enqueue(callback)
+        retrofitImpl.getNasaService(url).getImage(apiKey).enqueue(callback)
     }
 
     private fun handleImageResponse(response: Response<NASAImageResponse>) {
         if (response.isSuccessful && response.body() != null) {
-            liveDataForViewToObserve.value = AppState.Success(response.body()!!)
+            liveDataForViewToObserve.value = AppStateDailyImage.Success(response.body()!!)
             return
         }
 
         val message = response.message()
         if (message.isNullOrEmpty()) {
-            liveDataForViewToObserve.value = AppState.Error(Throwable("Unidentified error"))
+            liveDataForViewToObserve.value = AppStateDailyImage.Error(Throwable("Unidentified error"))
         } else {
-            liveDataForViewToObserve.value = AppState.Error(Throwable(message))
+            liveDataForViewToObserve.value = AppStateDailyImage.Error(Throwable(message))
         }
     }
 }

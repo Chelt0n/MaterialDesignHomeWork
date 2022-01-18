@@ -29,7 +29,7 @@
         tools:text="Two Clusters and a Comet" />
 
     <TextView
-        android:id="@+id/text_view_bottom_sheet_description_text"
+        android:id="@+id/text_view_description"
         style="@style/TextSheetBottom.Secondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

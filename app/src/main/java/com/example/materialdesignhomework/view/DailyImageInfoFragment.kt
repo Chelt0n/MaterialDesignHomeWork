@@ -1,33 +1,30 @@
 package com.example.materialdesignhomework.view
 
-
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.materialdesignhomework.R
 import com.example.materialdesignhomework.viewmodel.AppStateDailyImage
 import com.example.materialdesignhomework.viewmodel.DailyImageViewModel
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 
-class DailyImageFragment : Fragment() {
+
+class DailyImageInfoFragment : Fragment() {
+
+    private lateinit var textViewDescription: TextView
+    private lateinit var textViewHeader: TextView
+    private lateinit var imageInCollapsingToolBar: ImageView
+    private lateinit var toolbar: Toolbar
 
     private val viewModel: DailyImageViewModel by lazy {
         ViewModelProvider(this)[DailyImageViewModel::class.java]
     }
-
-    private lateinit var dailyImageView: ImageView
-    private lateinit var wikiInputEditText: TextInputEditText
-    private lateinit var wikiInputLayout: TextInputLayout
-    private lateinit var textViewImageTitle: TextView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,30 +36,24 @@ class DailyImageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_daily_image, container, false)
+        return inflater.inflate(R.layout.daily_image_info_layout, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView(view)
-        view.setOnClickListener { view.clearFocus() }
+        textViewHeader = view.findViewById(R.id.text_view_header)
+        textViewDescription =
+            view.findViewById(R.id.text_view_description)
+        imageInCollapsingToolBar = view.findViewById(R.id.image_collapsing_toolbar)
+        toolbar = view.findViewById(R.id.mToolbar)
+        (context as AppCompatActivity).setSupportActionBar(toolbar)
+        setHasOptionsMenu(true)
 
-
-        wikiInputLayout.setEndIconOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            val url = "https://en.wikipedia.org/wiki/${wikiInputEditText.text.toString()}"
-            val uri = Uri.parse(url)
-            intent.data = uri
-            startActivity(intent)
-        }
     }
 
-    private fun initView(view: View) {
-        dailyImageView = view.findViewById(R.id.image_view_nasa_image)
-        wikiInputEditText = view.findViewById(R.id.input_edit_text_wiki)
-        wikiInputLayout = view.findViewById(R.id.input_layout_wiki)
-        textViewImageTitle = view.findViewById(R.id.text_view_image_title)
-
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_toolbar,menu)
     }
 
 
@@ -74,10 +65,12 @@ class DailyImageFragment : Fragment() {
                 if (url.isNullOrEmpty()) {
                     Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
                 } else {
-                    dailyImageView.load(url) {
-                        lifecycle(this@DailyImageFragment)
+                    imageInCollapsingToolBar.load(url) {
+                        lifecycle(this@DailyImageInfoFragment)
                     }
-                    textViewImageTitle.text = serverResponseData.title
+                    textViewHeader.text = serverResponseData.title
+                    textViewDescription.text = serverResponseData.explanation
+
                 }
             }
             is AppStateDailyImage.Loading -> {
@@ -88,4 +81,6 @@ class DailyImageFragment : Fragment() {
             }
         }
     }
+
 }
+
