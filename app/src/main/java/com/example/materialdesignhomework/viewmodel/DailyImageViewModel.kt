@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.materialdesignhomework.BuildConfig
-import com.example.materialdesignhomework.model.imageofday.NASAImageResponse
 import com.example.materialdesignhomework.api.NasaApiRetrofit
+import com.example.materialdesignhomework.model.imageofday.NASAImageResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

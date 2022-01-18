@@ -1,23 +1,16 @@
 package com.example.materialdesignhomework.view
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.transition.*
-import android.util.Log
-import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnticipateOvershootInterpolator
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintSet
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 import com.example.materialdesignhomework.MyOnClick
-import com.example.materialdesignhomework.R
 import com.example.materialdesignhomework.databinding.MarsRoversPhotosFragmentBinding
 import com.example.materialdesignhomework.model.imageofmars.Photo
 import com.example.materialdesignhomework.viewmodel.AppStateLatestImageMars

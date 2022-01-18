@@ -1,0 +1,3 @@
+package com.example.materialdesignhomework.recyclerviewnotes.model
+
+interface SampleListItem
