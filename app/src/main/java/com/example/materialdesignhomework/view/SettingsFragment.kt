@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.example.materialdesign.FontTypes
 import com.example.materialdesign.AppThemeSharedPreferences
+import com.example.materialdesign.FontTypes
 import com.example.materialdesign.Theme
 import com.example.materialdesignhomework.R
 import com.example.materialdesignhomework.main.MainActivity

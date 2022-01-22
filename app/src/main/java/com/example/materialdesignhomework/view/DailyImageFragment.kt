@@ -5,21 +5,17 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.materialdesignhomework.R
 import com.example.materialdesignhomework.viewmodel.AppState
 import com.example.materialdesignhomework.viewmodel.DailyImageViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import java.lang.Error
 
 class DailyImageFragment : Fragment() {
 
@@ -35,11 +31,6 @@ class DailyImageFragment : Fragment() {
     private lateinit var textViewImageTitle: TextView
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getImageData().observe(this, { dailyImage -> renderData(dailyImage) })
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +41,7 @@ class DailyImageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getImageData().observe(viewLifecycleOwner, { dailyImage -> renderData(dailyImage) })
         initView(view)
         view.setOnClickListener { view.clearFocus() }
 

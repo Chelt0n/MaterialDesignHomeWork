@@ -1,14 +1,13 @@
 package com.example.materialdesignhomework.main
 
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.viewpager2.widget.ViewPager2
-import com.example.materialdesign.FontTypes
 import com.example.materialdesign.AppThemeSharedPreferences
 import com.example.materialdesign.AppThemeSharedPreferences.Companion.SETTINGS
+import com.example.materialdesign.FontTypes
 import com.example.materialdesign.Theme
 import com.example.materialdesignhomework.R
 import com.example.materialdesignhomework.view.ViewPagerAdapter
