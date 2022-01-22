@@ -14,4 +14,26 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="bottomAppBarCustomStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">#05010B</item>
+        <item name="itemTextColor">#05010B</item>
+        <item name="itemRippleColor">#60497F</item>
+        <item name="itemIconSize">25dp</item>
+    </style>
+
+    <style name="cursive" parent="Theme.MaterialDesignHomeWork">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">cursive</item>
+    </style>
+
+    <style name="sans_serif" parent="Theme.MaterialDesignHomeWork">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">sans-serif-thin</item>
+    </style>
+
+    <style name="condensed" parent="Theme.MaterialDesignHomeWork">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">sans-serif-condensed-medium</item>
+    </style>
+
 </resources>

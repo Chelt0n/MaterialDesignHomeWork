@@ -13,4 +13,24 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="cursive" parent="Theme.MaterialDesignHomeWork">
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">cursive</item>
+    </style>
+
+    <style name="sans_serif" parent="Theme.MaterialDesignHomeWork">
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">sans-serif-thin</item>
+    </style>
+
+    <style name="condensed" parent="Theme.MaterialDesignHomeWork">
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">sans-serif-condensed-medium</item>
+    </style>
+    <style name="bottomAppBarCustomStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">#EAFD3F</item>
+        <item name="itemTextColor">#EAFD3F</item>
+        <item name="itemRippleColor">#60497F</item>
+        <item name="itemIconSize">25dp</item>
+    </style>
 </resources>

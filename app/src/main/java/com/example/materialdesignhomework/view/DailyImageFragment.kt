@@ -5,18 +5,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.materialdesignhomework.R
 import com.example.materialdesignhomework.viewmodel.AppState
 import com.example.materialdesignhomework.viewmodel.DailyImageViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -29,17 +26,10 @@ class DailyImageFragment : Fragment() {
     private lateinit var dailyImageView: ImageView
     private lateinit var wikiInputEditText: TextInputEditText
     private lateinit var wikiInputLayout: TextInputLayout
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var textViewBottomSheetDescriptionHeader: TextView
     private lateinit var textViewBottomSheetDescriptionText: TextView
     private lateinit var textViewImageTitle: TextView
-    private lateinit var buttonShowBottomSheet: Button
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getImageData().observe(this, { dailyImage -> renderData(dailyImage) })
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,10 +41,9 @@ class DailyImageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getImageData().observe(viewLifecycleOwner, { dailyImage -> renderData(dailyImage) })
         initView(view)
-//        view.setOnClickListener { view.clearFocus() }
-
-        setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
+        view.setOnClickListener { view.clearFocus() }
 
 
         wikiInputLayout.setEndIconOnClickListener() {
@@ -75,16 +64,7 @@ class DailyImageFragment : Fragment() {
         textViewBottomSheetDescriptionText =
             view.findViewById(R.id.text_view_bottom_sheet_description_text)
         textViewImageTitle = view.findViewById(R.id.text_view_image_title)
-        buttonShowBottomSheet = view.findViewById(R.id.button_show_bottom_sheet)
 
-    }
-
-    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-        buttonShowBottomSheet.setOnClickListener {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        }
     }
 
 
@@ -93,22 +73,20 @@ class DailyImageFragment : Fragment() {
             is AppState.Success -> {
                 val serverResponseData = appState.serverResponseData
                 val url = serverResponseData.url
-                if (url.isNullOrEmpty()) {
-                    Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
-                } else {
-                    dailyImageView.load(url) {
-                        lifecycle(this@DailyImageFragment)
-                    }
-                    textViewBottomSheetDescriptionHeader.text = serverResponseData.title
-                    textViewBottomSheetDescriptionText.text = serverResponseData.explanation
-                    textViewImageTitle.text = serverResponseData.title
+
+                dailyImageView.load(url) {
+                    lifecycle(this@DailyImageFragment)
                 }
+                textViewBottomSheetDescriptionHeader.text = serverResponseData.title
+                textViewBottomSheetDescriptionText.text = serverResponseData.explanation
+                textViewImageTitle.text = serverResponseData.title
+
             }
             is AppState.Loading -> {
                 Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
             is AppState.Error -> {
-                Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, appState.error.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }
