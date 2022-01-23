@@ -21,10 +21,6 @@ class MarsPhotosFragment : Fragment() {
         ViewModelProvider(this)[LatestImagesMarsViewModel::class.java]
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getPhotos().observe(this, { appState -> render(appState) })
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +32,7 @@ class MarsPhotosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getPhotos().observe(viewLifecycleOwner, { appState -> render(appState) })
         binding.apply {
             recyclerViewPhotosOfRovers.layoutManager =
                 GridLayoutManager(context, 4)
