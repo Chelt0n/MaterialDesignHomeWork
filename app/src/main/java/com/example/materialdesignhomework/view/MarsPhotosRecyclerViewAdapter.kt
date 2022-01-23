@@ -7,21 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.materialdesignhomework.MyOnClick
 import com.example.materialdesignhomework.R
 import com.example.materialdesignhomework.databinding.CardViewBinding
 import com.example.materialdesignhomework.model.imageofmars.Photo
 
 
-class MarsPhotosRecyclerViewAdapter :
-    RecyclerView.Adapter<MarsPhotosRecyclerViewAdapter.MyViewHolder>() {
+class MarsPhotosRecyclerViewAdapter(
+    private val onClickListener: (Photo, Int) -> Unit
+) : RecyclerView.Adapter<MarsPhotosRecyclerViewAdapter.MyViewHolder>() {
 
     private var listOfPhotos = emptyList<Photo>()
-    private lateinit var listener: MyOnClick
-
-    fun setOnclickPhoto(onMyClick: MyOnClick) {
-        listener = onMyClick
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun setListOfPhotos(data: List<Photo>) {
@@ -37,7 +32,7 @@ class MarsPhotosRecyclerViewAdapter :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.render(listOfPhotos[position], position)
+        holder.render(listOfPhotos[position], position, onClickListener)
 
     }
 
@@ -47,10 +42,10 @@ class MarsPhotosRecyclerViewAdapter :
 
     inner class MyViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = CardViewBinding.bind(item)
-        fun render(nasa: Photo, position: Int) {
+        fun render(nasa: Photo, position: Int, listener: (Photo, Int) -> Unit) {
             binding.imageCard.load(nasa.img_src)
             binding.imageCard.setOnClickListener {
-                listener.click(nasa, position)
+                listener(nasa, position)
             }
         }
     }

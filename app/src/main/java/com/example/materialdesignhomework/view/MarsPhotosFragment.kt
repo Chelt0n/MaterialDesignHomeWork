@@ -8,15 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.materialdesignhomework.MyOnClick
 import com.example.materialdesignhomework.databinding.MarsRoversPhotosFragmentBinding
-import com.example.materialdesignhomework.model.imageofmars.Photo
 import com.example.materialdesignhomework.viewmodel.AppStateLatestImageMars
 import com.example.materialdesignhomework.viewmodel.LatestImagesMarsViewModel
 
-class MarsPhotosFragment : Fragment(),MyOnClick {
+class MarsPhotosFragment : Fragment() {
     private lateinit var binding: MarsRoversPhotosFragmentBinding
-    private val adapter = MarsPhotosRecyclerViewAdapter()
+    private val adapter = MarsPhotosRecyclerViewAdapter { photo, position ->
+        Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
+    }
     private val viewModel: LatestImagesMarsViewModel by lazy {
         ViewModelProvider(this)[LatestImagesMarsViewModel::class.java]
     }
@@ -38,9 +38,9 @@ class MarsPhotosFragment : Fragment(),MyOnClick {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             recyclerViewPhotosOfRovers.layoutManager =
-                GridLayoutManager(context,4)
+                GridLayoutManager(context, 4)
             recyclerViewPhotosOfRovers.adapter = adapter
-            adapter.setOnclickPhoto(this@MarsPhotosFragment)
+
         }
 
     }
@@ -49,19 +49,14 @@ class MarsPhotosFragment : Fragment(),MyOnClick {
     private fun render(appStateLatestImageMars: AppStateLatestImageMars?) {
         when (appStateLatestImageMars) {
             is AppStateLatestImageMars.Loading -> {
-                Toast.makeText(context,"Загрузка",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
             is AppStateLatestImageMars.Success -> {
                 adapter.setListOfPhotos(appStateLatestImageMars.serverResponseData.photos)
             }
             is AppStateLatestImageMars.Error -> {
-                Toast.makeText(context,"Ошибка",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
-    override fun click(nasa: Photo, position: Int) {
-        Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
-    }
-
 }

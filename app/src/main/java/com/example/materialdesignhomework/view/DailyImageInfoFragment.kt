@@ -52,7 +52,7 @@ class DailyImageInfoFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_toolbar,menu)
+        inflater.inflate(R.menu.menu_toolbar, menu)
     }
 
 
@@ -61,12 +61,8 @@ class DailyImageInfoFragment : Fragment() {
             is AppStateDailyImage.Success -> {
                 val serverResponseData = appStateDailyImage.serverResponseData
                 val url = serverResponseData.url
-                if (url.isNullOrEmpty()) {
-                    Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
-                } else {
-                    imageInCollapsingToolBar.load(url) {
-                        lifecycle(this@DailyImageInfoFragment)
-                    }
+                imageInCollapsingToolBar.load(url) {
+                    lifecycle(this@DailyImageInfoFragment)
                     textViewHeader.text = serverResponseData.title
                     textViewDescription.text = serverResponseData.explanation
 
@@ -76,7 +72,11 @@ class DailyImageInfoFragment : Fragment() {
                 Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
             is AppStateDailyImage.Error -> {
-                Toast.makeText(context, appStateDailyImage.error.localizedMessage, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    appStateDailyImage.error.localizedMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

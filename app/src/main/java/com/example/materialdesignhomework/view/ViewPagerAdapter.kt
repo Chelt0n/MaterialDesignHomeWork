@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 
 class ViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
-    private val items = listOf(DailyImageFragment(),DailyImageInfoFragment(),SettingsFragment())
+    private val items = listOf(DailyImageInfoFragment(),MarsPhotosFragment(),SettingsFragment())
 
     override fun getItemCount(): Int {
         return items.size
