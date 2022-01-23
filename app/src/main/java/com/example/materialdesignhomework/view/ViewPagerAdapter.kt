@@ -5,19 +5,14 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 
-class ViewPagerAdapter(private val fragment: FragmentActivity) :
-    FragmentStateAdapter(fragment) {
+class ViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
+    private val items = listOf(DailyImageFragment(),DailyImageInfoFragment(),SettingsFragment())
 
-
-    override fun getItemCount(): Int = 3
+    override fun getItemCount(): Int {
+        return items.size
+    }
 
     override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            0 -> DailyImageInfoFragment()
-            1 -> MarsPhotosFragment()
-            2 -> MotionFragment()
-            else -> DailyImageFragment()
-        }
-
+        return items[position]
     }
 }

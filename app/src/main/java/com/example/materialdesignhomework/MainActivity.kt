@@ -1,10 +1,9 @@
 package com.example.materialdesignhomework
 
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.Toolbar
 import androidx.viewpager2.widget.ViewPager2
 import com.example.materialdesignhomework.AppThemeSharedPreferences.Companion.SETTINGS
 import com.example.materialdesignhomework.view.ViewPagerAdapter
@@ -16,6 +15,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appThemeSharedPreferences: AppThemeSharedPreferences
     private lateinit var viewPager2: ViewPager2
     private lateinit var bottomNavigationView: BottomNavigationView
+
+
+    private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            bottomNavigationView.menu.getItem(position).isChecked = true;
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +37,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(this)
         viewPager2.adapter = adapter
 
-        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                bottomNavigationView.menu.getItem(position).isChecked = true;
-            }
-        })
+        viewPager2.registerOnPageChangeCallback(onPageChangeCallback)
 
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {

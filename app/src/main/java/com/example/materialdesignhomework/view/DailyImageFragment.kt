@@ -29,11 +29,6 @@ class DailyImageFragment : Fragment() {
     private lateinit var textViewImageTitle: TextView
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getImageData().observe(this, { dailyImage -> renderData(dailyImage) })
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,6 +39,7 @@ class DailyImageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getImageData().observe(viewLifecycleOwner, { dailyImage -> renderData(dailyImage) })
         initView(view)
         view.setOnClickListener { view.clearFocus() }
 
@@ -71,20 +67,18 @@ class DailyImageFragment : Fragment() {
             is AppStateDailyImage.Success -> {
                 val serverResponseData = appStateDailyImage.serverResponseData
                 val url = serverResponseData.url
-                if (url.isNullOrEmpty()) {
-                    Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
-                } else {
+
                     dailyImageView.load(url) {
                         lifecycle(this@DailyImageFragment)
                     }
                     textViewImageTitle.text = serverResponseData.title
-                }
+
             }
             is AppStateDailyImage.Loading -> {
                 Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
             is AppStateDailyImage.Error -> {
-                Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, appState.error.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }

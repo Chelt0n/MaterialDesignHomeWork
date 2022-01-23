@@ -27,7 +27,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="fontFamily">sans-serif-condensed-medium</item>
     </style>
-    <style name="bottomAppBarCustomTheme" parent="Widget.MaterialComponents.BottomNavigationView">
+    <style name="bottomAppBarCustomStyle" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="itemIconTint">#EAFD3F</item>
         <item name="itemTextColor">#EAFD3F</item>
         <item name="itemRippleColor">#60497F</item>

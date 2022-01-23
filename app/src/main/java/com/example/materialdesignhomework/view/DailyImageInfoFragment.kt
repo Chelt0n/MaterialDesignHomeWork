@@ -26,10 +26,6 @@ class DailyImageInfoFragment : Fragment() {
         ViewModelProvider(this)[DailyImageViewModel::class.java]
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getImageData().observe(this, { dailyImage -> renderData(dailyImage) })
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +37,9 @@ class DailyImageInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getImageData()
+            .observe(viewLifecycleOwner, { dailyImage -> renderData(dailyImage) })
+
         textViewHeader = view.findViewById(R.id.text_view_header)
         textViewDescription =
             view.findViewById(R.id.text_view_description)
@@ -77,7 +76,7 @@ class DailyImageInfoFragment : Fragment() {
                 Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
             is AppStateDailyImage.Error -> {
-                Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, appState.error.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }
