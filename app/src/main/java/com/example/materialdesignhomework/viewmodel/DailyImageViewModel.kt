@@ -57,7 +57,7 @@ class DailyImageViewModel(
             if (!model.url.isNullOrEmpty()){
                 liveDataForViewToObserve.value = AppStateDailyImage.Success(model)
             }else{
-                liveDataForViewToObserve.value = AppState.Error(Throwable("Нет ссылки на изображение"))
+                liveDataForViewToObserve.value = AppStateDailyImage.Error(Throwable("Нет ссылки на изображение"))
             }
             return
         }

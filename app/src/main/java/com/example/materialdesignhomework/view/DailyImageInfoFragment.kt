@@ -76,7 +76,7 @@ class DailyImageInfoFragment : Fragment() {
                 Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
             is AppStateDailyImage.Error -> {
-                Toast.makeText(context, appState.error.localizedMessage, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, appStateDailyImage.error.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }
