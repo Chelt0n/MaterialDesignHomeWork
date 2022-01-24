@@ -37,13 +37,12 @@ class DailyImageInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getImageData()
-            .observe(viewLifecycleOwner, { dailyImage -> renderData(dailyImage) })
+        viewModel.getImageData().observe(viewLifecycleOwner, { dailyImage -> renderData(dailyImage) })
 
         textViewHeader = view.findViewById(R.id.text_view_header)
-        textViewDescription =
-            view.findViewById(R.id.text_view_description)
+        textViewDescription = view.findViewById(R.id.text_view_description)
         imageInCollapsingToolBar = view.findViewById(R.id.image_collapsing_toolbar)
+
         toolbar = view.findViewById(R.id.mToolbar)
         (context as AppCompatActivity).setSupportActionBar(toolbar)
         setHasOptionsMenu(true)

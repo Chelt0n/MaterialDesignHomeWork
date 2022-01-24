@@ -2,8 +2,7 @@ package com.example.materialdesignhomework.viewmodel
 
 import com.example.materialdesignhomework.model.imageofmars.ListOfPhotos
 
-
-sealed class AppStateLatestImageMars{
+sealed class AppStateLatestImageMars {
 
     data class Success(val serverResponseData: ListOfPhotos) : AppStateLatestImageMars()
 

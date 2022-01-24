@@ -13,10 +13,19 @@ import com.example.materialdesignhomework.viewmodel.AppStateLatestImageMars
 import com.example.materialdesignhomework.viewmodel.LatestImagesMarsViewModel
 
 class MarsPhotosFragment : Fragment() {
+
     private lateinit var binding: MarsRoversPhotosFragmentBinding
-    private val adapter = MarsPhotosRecyclerViewAdapter { photo, position ->
-        Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
+    private val adapter by lazy {
+        MarsPhotosRecyclerViewAdapter(
+            onClickMarsPhotoListener = { photo, position ->
+                Toast.makeText(
+                    context,
+                    "№$position " + photo.camera.fullName + "\n" + photo.earthDate,
+                    Toast.LENGTH_SHORT
+                ).show()
+            })
     }
+
     private val viewModel: LatestImagesMarsViewModel by lazy {
         ViewModelProvider(this)[LatestImagesMarsViewModel::class.java]
     }
@@ -33,12 +42,9 @@ class MarsPhotosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getPhotos().observe(viewLifecycleOwner, { appState -> render(appState) })
-        binding.apply {
-            recyclerViewPhotosOfRovers.layoutManager =
-                GridLayoutManager(context, 4)
-            recyclerViewPhotosOfRovers.adapter = adapter
 
-        }
+        binding.recyclerViewPhotosOfRovers.layoutManager = GridLayoutManager(context, 4)
+        binding.recyclerViewPhotosOfRovers.adapter = adapter
 
     }
 
