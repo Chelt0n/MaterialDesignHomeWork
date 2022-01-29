@@ -19,21 +19,26 @@ import coil.load
 import com.example.materialdesignhomework.MyOnClick
 import com.example.materialdesignhomework.R
 import com.example.materialdesignhomework.databinding.MarsRoversPhotosFragmentBinding
-import com.example.materialdesignhomework.model.imageofmars.Photo
 import com.example.materialdesignhomework.viewmodel.AppStateLatestImageMars
 import com.example.materialdesignhomework.viewmodel.LatestImagesMarsViewModel
 
-class MarsPhotosFragment : Fragment(), MyOnClick {
+class MarsPhotosFragment : Fragment() {
     private lateinit var binding: MarsRoversPhotosFragmentBinding
-    private val adapter = MarsPhotosRecyclerViewAdapter()
+    private val adapter by lazy {
+        MarsPhotosRecyclerViewAdapter(
+            onClickMarsPhotoListener = { photo, position ->
+                Toast.makeText(
+                    context,
+                    "№$position " + photo.camera.fullName + "\n" + photo.earthDate,
+                    Toast.LENGTH_SHORT
+                ).show()
+            })
+    }
+
     private val viewModel: LatestImagesMarsViewModel by lazy {
         ViewModelProvider(this)[LatestImagesMarsViewModel::class.java]
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getPhotos().observe(this, { appState -> render(appState) })
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,13 +50,10 @@ class MarsPhotosFragment : Fragment(), MyOnClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.apply {
-            recyclerViewPhotosOfRovers.layoutManager =
-                GridLayoutManager(context, 4)
-            recyclerViewPhotosOfRovers.adapter = adapter
-            adapter.setOnclickPhoto(this@MarsPhotosFragment)
-        }
-        binding.imageView.setOnClickListener {
+        viewModel.getPhotos().observe(viewLifecycleOwner, { appState -> render(appState) })
+
+        binding.recyclerViewPhotosOfRovers.layoutManager = GridLayoutManager(context, 4)
+        binding.recyclerViewPhotosOfRovers.adapter = adapter
 
             closeEnlargedImageWithAnimation()
         }

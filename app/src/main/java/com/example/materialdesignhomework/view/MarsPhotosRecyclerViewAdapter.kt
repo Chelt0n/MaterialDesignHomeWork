@@ -3,25 +3,17 @@ package com.example.materialdesignhomework.view
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.example.materialdesignhomework.MyOnClick
 import com.example.materialdesignhomework.R
-import com.example.materialdesignhomework.databinding.CardViewBinding
 import com.example.materialdesignhomework.model.imageofmars.Photo
 
 
-class MarsPhotosRecyclerViewAdapter :
-    RecyclerView.Adapter<MarsPhotosRecyclerViewAdapter.MyViewHolder>() {
+class MarsPhotosRecyclerViewAdapter(
+    private val onClickMarsPhotoListener: (Photo, Int) -> Unit
+) : RecyclerView.Adapter<MarsPhotoViewHolder>() {
 
     private var listOfPhotos = emptyList<Photo>()
-    private lateinit var listener: MyOnClick
-
-    fun setOnclickPhoto(onMyClick: MyOnClick) {
-        listener = onMyClick
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun setListOfPhotos(data: List<Photo>) {
@@ -29,15 +21,15 @@ class MarsPhotosRecyclerViewAdapter :
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarsPhotoViewHolder {
+        return MarsPhotoViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.card_view, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.render(listOfPhotos[position], position)
+    override fun onBindViewHolder(holder: MarsPhotoViewHolder, position: Int) {
+        holder.render(listOfPhotos[position], position, onClickMarsPhotoListener)
 
     }
 
@@ -45,13 +37,4 @@ class MarsPhotosRecyclerViewAdapter :
         return listOfPhotos.size
     }
 
-    inner class MyViewHolder(item: View) : RecyclerView.ViewHolder(item) {
-        private val binding = CardViewBinding.bind(item)
-        fun render(nasa: Photo, position: Int) {
-            binding.imageCard.load(nasa.img_src)
-            binding.imageCard.setOnClickListener {
-                listener.click(nasa, position)
-            }
-        }
-    }
 }

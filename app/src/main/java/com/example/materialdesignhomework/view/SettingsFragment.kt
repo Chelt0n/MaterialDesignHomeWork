@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.materialdesignhomework.FontTypes
 import com.example.materialdesignhomework.AppThemeSharedPreferences
+import com.example.materialdesignhomework.FontTypes
 import com.example.materialdesignhomework.Theme
 import com.example.materialdesignhomework.R
 import com.example.materialdesignhomework.MainActivity

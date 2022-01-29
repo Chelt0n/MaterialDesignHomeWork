@@ -26,10 +26,6 @@ class DailyImageInfoFragment : Fragment() {
         ViewModelProvider(this)[DailyImageViewModel::class.java]
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getImageData().observe(this, { dailyImage -> renderData(dailyImage) })
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,10 +37,12 @@ class DailyImageInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getImageData().observe(viewLifecycleOwner, { dailyImage -> renderData(dailyImage) })
+
         textViewHeader = view.findViewById(R.id.text_view_header)
-        textViewDescription =
-            view.findViewById(R.id.text_view_description)
+        textViewDescription = view.findViewById(R.id.text_view_description)
         imageInCollapsingToolBar = view.findViewById(R.id.image_collapsing_toolbar)
+
         toolbar = view.findViewById(R.id.mToolbar)
         (context as AppCompatActivity).setSupportActionBar(toolbar)
         setHasOptionsMenu(true)
@@ -53,7 +51,7 @@ class DailyImageInfoFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_toolbar,menu)
+        inflater.inflate(R.menu.menu_toolbar, menu)
     }
 
 
@@ -62,12 +60,8 @@ class DailyImageInfoFragment : Fragment() {
             is AppStateDailyImage.Success -> {
                 val serverResponseData = appStateDailyImage.serverResponseData
                 val url = serverResponseData.url
-                if (url.isNullOrEmpty()) {
-                    Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
-                } else {
-                    imageInCollapsingToolBar.load(url) {
-                        lifecycle(this@DailyImageInfoFragment)
-                    }
+                imageInCollapsingToolBar.load(url) {
+                    lifecycle(this@DailyImageInfoFragment)
                     textViewHeader.text = serverResponseData.title
                     textViewDescription.text = serverResponseData.explanation
 
@@ -77,7 +71,11 @@ class DailyImageInfoFragment : Fragment() {
                 Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
             }
             is AppStateDailyImage.Error -> {
-                Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    appStateDailyImage.error.localizedMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

@@ -53,7 +53,12 @@ class DailyImageViewModel(
 
     private fun handleImageResponse(response: Response<NASAImageResponse>) {
         if (response.isSuccessful && response.body() != null) {
-            liveDataForViewToObserve.value = AppStateDailyImage.Success(response.body()!!)
+            val model = response.body()!!
+            if (!model.url.isNullOrEmpty()){
+                liveDataForViewToObserve.value = AppStateDailyImage.Success(model)
+            }else{
+                liveDataForViewToObserve.value = AppStateDailyImage.Error(Throwable("Нет ссылки на изображение"))
+            }
             return
         }
 
