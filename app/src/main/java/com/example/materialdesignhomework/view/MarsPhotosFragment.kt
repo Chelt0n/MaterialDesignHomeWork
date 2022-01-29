@@ -3,30 +3,27 @@ package com.example.materialdesignhomework.view
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.transition.*
-import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnticipateOvershootInterpolator
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
-import com.example.materialdesignhomework.MyOnClick
-import com.example.materialdesignhomework.R
 import com.example.materialdesignhomework.databinding.MarsRoversPhotosFragmentBinding
+import com.example.materialdesignhomework.model.imageofmars.Photo
 import com.example.materialdesignhomework.viewmodel.AppStateLatestImageMars
 import com.example.materialdesignhomework.viewmodel.LatestImagesMarsViewModel
 
+
 class MarsPhotosFragment : Fragment() {
+
     private lateinit var binding: MarsRoversPhotosFragmentBinding
+
     private val adapter by lazy {
         MarsPhotosRecyclerViewAdapter(
             onClickMarsPhotoListener = { photo, position ->
+                showEnlargedImageWithAnimation(photo)
                 Toast.makeText(
                     context,
                     "№$position " + photo.camera.fullName + "\n" + photo.earthDate,
@@ -55,10 +52,10 @@ class MarsPhotosFragment : Fragment() {
         binding.recyclerViewPhotosOfRovers.layoutManager = GridLayoutManager(context, 4)
         binding.recyclerViewPhotosOfRovers.adapter = adapter
 
+        binding.imageView.setOnClickListener {
             closeEnlargedImageWithAnimation()
         }
     }
-
 
     private fun render(appStateLatestImageMars: AppStateLatestImageMars?) {
         when (appStateLatestImageMars) {
@@ -73,7 +70,6 @@ class MarsPhotosFragment : Fragment() {
             }
         }
     }
-
 
     private fun showEnlargedImageWithAnimation(nasa: Photo) {
         val transition = Fade()
@@ -90,7 +86,10 @@ class MarsPhotosFragment : Fragment() {
         binding.imageView.visibility = View.GONE
     }
 
-    override fun click(nasa: Photo, position: Int) {
-        showEnlargedImageWithAnimation(nasa)
-    }
 }
+
+
+
+
+
+
